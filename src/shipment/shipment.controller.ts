@@ -6,12 +6,15 @@ import {
   Patch,
   Post,
   UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UpdateShipmentStatusDto } from './dto/update-shipment-status.dto';
 import { ShipmentService } from './shipment.service';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 import { AssignDriverDto } from './dto/assign-driver.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import type { Request } from 'express';
+import type { AuthUser } from '../auth/types/auth-user.type';
 
 @UseGuards(JwtAuthGuard)
 @Controller('shipments')
@@ -37,9 +40,14 @@ export class ShipmentController {
   updateShipmentNoStatus(
     @Param('shipmentNo') shipmentNo: string,
     @Body() dto: UpdateShipmentStatusDto,
+    @Req() req: Request,
   ) {
-    console.log('=== updateShipmentNoStatus called ===', shipmentNo);
-    return this.shipmentService.updateShipmentNoStatus(shipmentNo, dto);
+    const user = req.user as AuthUser;
+    return this.shipmentService.updateShipmentNoStatus(
+      shipmentNo,
+      dto,
+      user.driverName,
+    );
   }
 
   @Get(':shipmentNo/history')
