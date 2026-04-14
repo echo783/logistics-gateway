@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  MinLength,
+} from 'class-validator';
 
 export class CreateDriverDto {
   @IsString()
@@ -12,6 +18,10 @@ export class CreateDriverDto {
   @IsString()
   @IsNotEmpty()
   vehicleNo!: string;
+
+  @IsString()
+  @MinLength(4)
+  password!: string;
 
   @IsOptional()
   @IsBoolean()

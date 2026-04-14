@@ -16,8 +16,8 @@ enum ShipmentStatus {
 }
 
 model Shipment {
- id               Int      @id @default(autoincrement())
-  shipmentNo       String   @unique
+  id               Int            @id @default(autoincrement())
+  shipmentNo       String         @unique
   itemName         String
   quantity         Int
   companyName      String
@@ -27,9 +27,9 @@ model Shipment {
   receiverPhone    String
   currentStatus    ShipmentStatus @default(REQUESTED)
   assignedDriverId Int?
-  assignedDriver   Driver?  @relation(fields: [assignedDriverId], references: [id])
-  requestedAt      DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  assignedDriver   Driver?        @relation(fields: [assignedDriverId], references: [id])
+  requestedAt      DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 model Driver {
@@ -37,6 +37,7 @@ model Driver {
   driverName      String
   driverPhone     String     @unique
   vehicleNo       String     @unique
+  passwordHash    String
   isActive        Boolean    @default(true)
   currentWorkload Int        @default(0)
   shipments       Shipment[]
@@ -55,9 +56,9 @@ model ShipmentStatusHistory {
 }
 
 model ShipmentAssignHistory {
-  id            Int      @id @default(autoincrement())
-  shipmentNo    String
-  fromDriverId  Int?
-  toDriverId    Int
-  assignedAt    DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  shipmentNo   String
+  fromDriverId Int?
+  toDriverId   Int
+  assignedAt   DateTime @default(now())
 }

@@ -45,6 +45,7 @@ export class ShipmentService {
   async updateShipmentNoStatus(
     shipmentNo: string,
     dto: UpdateShipmentStatusDto,
+    changedBy: string,
   ) {
     return this.prisma.$transaction(async (tx) => {
       const shipment = await tx.shipment.findUnique({
@@ -93,7 +94,7 @@ export class ShipmentService {
           shipmentNo,
           fromStatus: currentStatus,
           toStatus: nextStatus,
-          changedBy: dto.changedBy,
+          changedBy,
           reason: dto.reason,
         },
       });

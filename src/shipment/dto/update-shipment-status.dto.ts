@@ -7,9 +7,5 @@ export class UpdateShipmentStatusDto {
 
   @IsOptional()
   @IsString()
-  changedBy?: string;
-
-  @IsOptional()
-  @IsString()
   reason?: string;
 }
